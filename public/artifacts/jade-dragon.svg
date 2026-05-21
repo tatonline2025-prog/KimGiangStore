@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="900" viewBox="0 0 800 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#16221a" />
+      <stop offset="100%" stop-color="#09110c" />
+    </linearGradient>
+    <radialGradient id="jade" cx="45%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#b6f2c9" />
+      <stop offset="60%" stop-color="#56ae73" />
+      <stop offset="100%" stop-color="#2f7149" />
+    </radialGradient>
+  </defs>
+  <rect width="800" height="900" fill="url(#bg)" />
+  <path d="M220 540 C260 380 500 290 592 430 C640 505 570 590 490 580 C440 575 400 520 420 470 C438 428 492 430 512 458"
+        stroke="url(#jade)" stroke-width="74" fill="none" stroke-linecap="round" />
+  <circle cx="545" cy="420" r="35" fill="url(#jade)" />
+  <circle cx="560" cy="412" r="6" fill="#102014" />
+  <ellipse cx="350" cy="650" rx="220" ry="54" fill="#213728" opacity="0.8" />
+</svg>

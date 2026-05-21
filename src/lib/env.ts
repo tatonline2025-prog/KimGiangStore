@@ -2,6 +2,11 @@ export const env = {
   mongoUri: process.env.MONGODB_URI,
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000",
 
+  adminUsername: process.env.ADMIN_USERNAME ?? "admin",
+  adminPassword: process.env.ADMIN_PASSWORD ?? "KimGiang@2026",
+  adminSessionSecret:
+    process.env.ADMIN_SESSION_SECRET ?? "kimgiang-admin-session-secret",
+
   stripeSecretKey: process.env.STRIPE_SECRET_KEY,
   stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
 

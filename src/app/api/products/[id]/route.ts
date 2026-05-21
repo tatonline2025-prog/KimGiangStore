@@ -1,9 +1,14 @@
 import { NextResponse } from "next/server";
 
+import { isAdminAuthenticatedRequest } from "@/lib/admin-request";
 import { connectDb } from "@/lib/db";
 import { Product } from "@/models/Product";
 
 export async function PUT(req: Request, context: { params: Promise<{ id: string }> }) {
+  if (!isAdminAuthenticatedRequest(req)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const dbReady = await connectDb();
   if (!dbReady) {
     return NextResponse.json(
@@ -24,6 +29,10 @@ export async function PUT(req: Request, context: { params: Promise<{ id: string 
 }
 
 export async function DELETE(_req: Request, context: { params: Promise<{ id: string }> }) {
+  if (!isAdminAuthenticatedRequest(_req)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const dbReady = await connectDb();
   if (!dbReady) {
     return NextResponse.json(

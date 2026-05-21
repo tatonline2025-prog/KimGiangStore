@@ -1,10 +1,22 @@
 import { AdminPanel } from "@/components/AdminPanel";
+import { getAdminSessionCookieName, parseAdminSessionToken } from "@/lib/admin-auth";
 import { connectDb } from "@/lib/db";
 import { seedProducts } from "@/lib/seed-data";
+import { getStoreSettings } from "@/lib/store-settings";
 import { Order } from "@/models/Order";
 import { Product } from "@/models/Product";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function AdminPage() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(getAdminSessionCookieName())?.value;
+  const session = parseAdminSessionToken(token);
+
+  if (!session) {
+    redirect("/admin/login");
+  }
+
   const dbReady = await connectDb();
 
   const [products, orders] = dbReady
@@ -14,10 +26,13 @@ export default async function AdminPage() {
       ])
     : [seedProducts, []];
 
+  const settings = await getStoreSettings();
+
   return (
     <AdminPanel
       initialProducts={products.map((item) => ({ ...item, _id: String(item._id ?? item.slug) }))}
       initialOrders={orders.map((item) => ({ ...item, _id: String(item._id) }))}
+      initialSettings={settings}
     />
   );
 }

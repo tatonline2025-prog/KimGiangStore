@@ -4,6 +4,7 @@ import { connectDb } from "@/lib/db";
 import { createQrSession } from "@/lib/payments/qr";
 import { createStripeCheckoutSession } from "@/lib/payments/stripe";
 import { createTwoCheckoutSession } from "@/lib/payments/twocheckout";
+import { getStoreSettings } from "@/lib/store-settings";
 import { Order } from "@/models/Order";
 import { Payment } from "@/models/Payment";
 
@@ -29,6 +30,19 @@ export async function POST(req: Request) {
   }
 
   const body = (await req.json()) as CheckoutBody;
+    const settings = await getStoreSettings();
+    const disabledMethod =
+      (body.paymentMethod === "stripe" && !settings.allowStripe) ||
+      (body.paymentMethod === "twocheckout" && !settings.allowTwoCheckout) ||
+      (body.paymentMethod === "qr" && !settings.allowQr);
+
+    if (disabledMethod) {
+      return NextResponse.json(
+        { error: "Selected payment method is currently disabled by store settings." },
+        { status: 400 },
+      );
+    }
+
   if (!body.customerName || !body.customerEmail || !body.paymentMethod || !body.item) {
     return NextResponse.json({ error: "Invalid checkout payload" }, { status: 400 });
   }

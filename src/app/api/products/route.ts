@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { connectDb } from "@/lib/db";
+import { isAdminAuthenticatedRequest } from "@/lib/admin-request";
 import { seedProducts } from "@/lib/seed-data";
 import { Product } from "@/models/Product";
 
@@ -15,6 +16,10 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+  if (!isAdminAuthenticatedRequest(req)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const dbReady = await connectDb();
   if (!dbReady) {
     return NextResponse.json(
