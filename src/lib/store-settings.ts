@@ -21,6 +21,15 @@ export const defaultStoreSettings = {
   allowStripe: true,
   allowTwoCheckout: true,
   allowQr: true,
+  stripePublicKey: "",
+  stripeWebhookEndpoint: "/api/webhooks/stripe",
+  twoCheckoutSellerId: "",
+  twoCheckoutWebhookEndpoint: "/api/webhooks/twocheckout",
+  qrProviderName: "VietQR",
+  qrCallbackEndpoint: "/api/webhooks/qr",
+  qrBankBin: "970415",
+  qrBankAccount: "0123456789",
+  qrAccountName: "KIM GIANG ANTIQUES",
 };
 
 export async function getStoreSettings() {

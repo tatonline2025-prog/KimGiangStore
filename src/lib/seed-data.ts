@@ -15,7 +15,8 @@ export const seedProducts: SeedProduct[] = [
     slug: "gold-gilded-buddha-statue",
     dynasty: "17th Century",
     priceUsd: 180000,
-    imageUrl: "/artifacts/buddha-gold.svg",
+    imageUrl:
+      "https://images.unsplash.com/photo-1558980394-d9cfe2f1f190?auto=format&fit=crop&w=1200&q=80",
     shortDescription: "Refined devotional sculpture with preserved lacquer traces.",
     longDescription:
       "A serene seated Buddha cast in bronze and gilded in fine layers, attributed to late 17th century workshops.",
@@ -26,7 +27,8 @@ export const seedProducts: SeedProduct[] = [
     slug: "jade-dragon-carving",
     dynasty: "Tang Dynasty",
     priceUsd: 95000,
-    imageUrl: "/artifacts/jade-dragon.svg",
+    imageUrl:
+      "https://images.unsplash.com/photo-1560354811-2d7f2f8e2f28?auto=format&fit=crop&w=1200&q=80",
     shortDescription: "Celadon jade dragon with cloud-form carving details.",
     longDescription:
       "Carved jade pendant featuring a dragon in mid-turn, symbolizing imperial protection and prosperity.",
@@ -37,7 +39,8 @@ export const seedProducts: SeedProduct[] = [
     slug: "imperial-lacquer-box",
     dynasty: "Le Dynasty",
     priceUsd: 25000,
-    imageUrl: "/artifacts/lacquer-box.svg",
+    imageUrl:
+      "https://images.unsplash.com/photo-1610882648335-ced8fc8fa6b5?auto=format&fit=crop&w=1200&q=80",
     shortDescription: "Hand-polished lacquer chest with mother-of-pearl motif.",
     longDescription:
       "Rectangular ceremonial box with deep red lacquer body and intricate mother-of-pearl floral medallions.",
@@ -48,7 +51,8 @@ export const seedProducts: SeedProduct[] = [
     slug: "bronze-ceremonial-gong",
     dynasty: "Dong Son",
     priceUsd: 45000,
-    imageUrl: "/artifacts/bronze-gong.svg",
+    imageUrl:
+      "https://images.unsplash.com/photo-1515442261605-65987783cb6a?auto=format&fit=crop&w=1200&q=80",
     shortDescription: "Ritual bronze gong with radial sunburst centerpiece.",
     longDescription:
       "An early ceremonial percussion artifact with concentric rings and central boss, likely used in ritual contexts.",
@@ -59,7 +63,8 @@ export const seedProducts: SeedProduct[] = [
     slug: "celadon-tea-vessel",
     dynasty: "Ly Dynasty",
     priceUsd: 32000,
-    imageUrl: "/artifacts/celadon-vessel.svg",
+    imageUrl:
+      "https://images.unsplash.com/photo-1593469949508-5f3f8b7a2cb2?auto=format&fit=crop&w=1200&q=80",
     shortDescription: "Translucent celadon glaze with lotus petal engraving.",
     longDescription:
       "Wheel-thrown tea vessel with subtle crackle glaze and floral relief details characteristic of Ly kiln aesthetics.",
@@ -70,7 +75,8 @@ export const seedProducts: SeedProduct[] = [
     slug: "ivory-seal-handle",
     dynasty: "Nguyen Court",
     priceUsd: 56000,
-    imageUrl: "/artifacts/phoenix-panel.svg",
+    imageUrl:
+      "https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea?auto=format&fit=crop&w=1200&q=80",
     shortDescription: "Ceremonial seal handle with cloud-scroll carving.",
     longDescription:
       "Courtly ivory seal grip with hand-chiseled motifs used for imperial dispatch and administrative authentication.",
@@ -81,7 +87,8 @@ export const seedProducts: SeedProduct[] = [
     slug: "temple-bronze-bell",
     dynasty: "16th Century",
     priceUsd: 88000,
-    imageUrl: "/artifacts/bronze-gong.svg",
+    imageUrl:
+      "https://images.unsplash.com/photo-1579519431462-8f8d9b8f5a08?auto=format&fit=crop&w=1200&q=80",
     shortDescription: "Ritual bell with engraved sutra bands.",
     longDescription:
       "Cast bronze bell bearing script lines and protective motifs, traditionally suspended in pagoda courtyards.",
@@ -92,7 +99,8 @@ export const seedProducts: SeedProduct[] = [
     slug: "lacquered-manuscript-chest",
     dynasty: "Tran Dynasty",
     priceUsd: 47000,
-    imageUrl: "/artifacts/manuscript-chest.svg",
+    imageUrl:
+      "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1200&q=80",
     shortDescription: "Archive chest with cinnabar lacquer and brass corner guards.",
     longDescription:
       "Rectangular manuscript chest designed for preservation of royal records, featuring layered lacquer and gilt trim.",
@@ -103,7 +111,8 @@ export const seedProducts: SeedProduct[] = [
     slug: "scholar-stone-plinth",
     dynasty: "Ming Trade Period",
     priceUsd: 39000,
-    imageUrl: "/artifacts/jade-disc.svg",
+    imageUrl:
+      "https://images.unsplash.com/photo-1514986888952-8cd320577b68?auto=format&fit=crop&w=1200&q=80",
     shortDescription: "Dark wood base for scholar stones and calligraphy display.",
     longDescription:
       "Hand-carved hardwood plinth with cloud feet, crafted to elevate display stones in scholarly interiors.",
@@ -114,7 +123,8 @@ export const seedProducts: SeedProduct[] = [
     slug: "blue-white-porcelain-jar",
     dynasty: "Le Trung Hung",
     priceUsd: 74000,
-    imageUrl: "/artifacts/porcelain-jar.svg",
+    imageUrl:
+      "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=1200&q=80",
     shortDescription: "Cobalt floral scrollwork under transparent glaze.",
     longDescription:
       "Tall porcelain jar with cobalt-painted lotus vines and fitted cover, fired at high temperature for enduring luster.",
@@ -125,7 +135,8 @@ export const seedProducts: SeedProduct[] = [
     slug: "carved-phoenix-panel",
     dynasty: "Hue Imperial Workshop",
     priceUsd: 51000,
-    imageUrl: "/artifacts/phoenix-panel.svg",
+    imageUrl:
+      "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=1200&q=80",
     shortDescription: "Gilded wood panel with rising phoenix motif.",
     longDescription:
       "Decorative panel once mounted in a ceremonial hall, combining layered carving, lacquer, and gold highlights.",
@@ -136,7 +147,8 @@ export const seedProducts: SeedProduct[] = [
     slug: "jade-bi-disc",
     dynasty: "Han Influence",
     priceUsd: 67000,
-    imageUrl: "/artifacts/jade-disc.svg",
+    imageUrl:
+      "https://images.unsplash.com/photo-1515555230216-82228b88ea98?auto=format&fit=crop&w=1200&q=80",
     shortDescription: "Ritual bi disc with polished nephrite surface.",
     longDescription:
       "Circular jade bi disc with smooth aperture and subtle mineral veining, symbolizing heaven in ritual cosmology.",

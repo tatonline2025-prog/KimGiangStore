@@ -13,15 +13,6 @@ type CatalogItem = {
   provenanceCode: string;
 };
 
-type CheckoutResponse = {
-  orderId: string;
-  provider: "stripe" | "twocheckout" | "qr";
-  checkoutUrl?: string;
-  qrDataUrl?: string;
-  transferContent?: string;
-  mode: "mock" | "live";
-};
-
 type StoreSettings = {
   storeName: string;
   menuItems: string[];
@@ -31,15 +22,12 @@ type StoreSettings = {
   provenanceTitle: string;
   provenanceDescription: string;
   paymentLabels: string[];
-  allowStripe: boolean;
-  allowTwoCheckout: boolean;
-  allowQr: boolean;
 };
 
 const heroArtifacts = [
-  "/artifacts/buddha-gold.svg",
-  "/artifacts/porcelain-jar.svg",
-  "/artifacts/lacquer-box.svg",
+  "https://images.unsplash.com/photo-1558980394-d9cfe2f1f190?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1610882648335-ced8fc8fa6b5?auto=format&fit=crop&w=1200&q=80",
 ];
 
 export function StorefrontPage({
@@ -50,69 +38,8 @@ export function StorefrontPage({
   settings: StoreSettings;
 }) {
   const [selected, setSelected] = useState<CatalogItem | null>(products[0] ?? null);
-  const [paymentMethod, setPaymentMethod] = useState<"stripe" | "twocheckout" | "qr">("stripe");
-  const [customerName, setCustomerName] = useState("Kim Giang Collector");
-  const [customerEmail, setCustomerEmail] = useState("collector@example.com");
-  const [loading, setLoading] = useState(false);
-  const [checkoutInfo, setCheckoutInfo] = useState<CheckoutResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
 
   const featured = useMemo(() => products.slice(0, 12), [products]);
-  const enabledPayments = useMemo(() => {
-    const methods: Array<{ value: "stripe" | "twocheckout" | "qr"; label: string }> = [];
-
-    if (settings.allowStripe) {
-      methods.push({ value: "stripe", label: "Stripe" });
-    }
-    if (settings.allowTwoCheckout) {
-      methods.push({ value: "twocheckout", label: "2Checkout" });
-    }
-    if (settings.allowQr) {
-      methods.push({ value: "qr", label: "QR Transfer" });
-    }
-
-    return methods;
-  }, [settings.allowQr, settings.allowStripe, settings.allowTwoCheckout]);
-
-  async function handleCheckout() {
-    if (!selected) return;
-
-    setLoading(true);
-    setError(null);
-    setCheckoutInfo(null);
-
-    try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          customerName,
-          customerEmail,
-          paymentMethod,
-          item: {
-            productId: selected._id ?? selected.slug,
-            name: selected.name,
-            priceUsd: selected.priceUsd,
-            quantity: 1,
-          },
-        }),
-      });
-
-      const data = (await response.json()) as CheckoutResponse & { error?: string };
-      if (!response.ok) {
-        throw new Error(data.error ?? "Checkout failed");
-      }
-
-      setCheckoutInfo(data);
-      if (data.checkoutUrl) {
-        window.open(data.checkoutUrl, "_blank", "noopener,noreferrer");
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Checkout failed");
-    } finally {
-      setLoading(false);
-    }
-  }
 
   return (
     <div className="min-h-screen bg-[#e6e2d9] text-[#1e1b16]">
@@ -127,8 +54,8 @@ export function StorefrontPage({
         </nav>
       </header>
 
-      <section className="mx-auto grid max-w-6xl gap-8 px-4 pb-12 pt-6 sm:px-6 md:grid-cols-[1.4fr_1fr]">
-        <div className="relative overflow-hidden rounded-sm border border-[#8d7750]/35 bg-[radial-gradient(circle_at_15%_0%,#4e422e_0%,#2c2418_38%,#17120d_100%)] p-6 text-[#efe4cd] shadow-[0_20px_80px_-30px_rgba(0,0,0,0.8)] sm:p-8">
+      <section className="mx-auto max-w-6xl px-4 pb-10 pt-6 sm:px-6">
+        <div className="relative overflow-hidden rounded-sm border border-[#8d7750]/35 bg-[radial-gradient(circle_at_15%_0%,#4e422e_0%,#2c2418_38%,#17120d_100%)] p-6 text-[#efe4cd] shadow-[0_20px_80px_-30px_rgba(0,0,0,0.8)] sm:p-8 md:min-h-[430px]">
           <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#cfb784]">Kim Giang Antiques</p>
           <h1 className="max-w-xl text-3xl leading-tight sm:text-4xl md:text-5xl">
             {settings.heroTitle}
@@ -146,63 +73,13 @@ export function StorefrontPage({
                   alt="Artifact"
                   className="h-28 w-full object-cover md:h-36"
                   onError={(event) => {
-                    event.currentTarget.src = "/artifacts/artifact-fallback.svg";
+                    event.currentTarget.src =
+                      "https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea?auto=format&fit=crop&w=1200&q=80";
                   }}
                 />
               </div>
             ))}
           </div>
-        </div>
-
-        <div className="rounded-sm border border-[#8d7750]/40 bg-[#111]/90 p-5 text-[#efe4cd]">
-          <p className="text-xs uppercase tracking-[0.3em] text-[#cfb784]">Quick Checkout</p>
-          <h2 className="mt-2 text-2xl">Secure Payment Options</h2>
-          <div className="mt-4 grid gap-2 text-sm">
-            <input
-              value={customerName}
-              onChange={(e) => setCustomerName(e.target.value)}
-              className="border border-[#8d7750]/40 bg-black/20 px-3 py-2 outline-none"
-              placeholder="Customer name"
-            />
-            <input
-              value={customerEmail}
-              onChange={(e) => setCustomerEmail(e.target.value)}
-              className="border border-[#8d7750]/40 bg-black/20 px-3 py-2 outline-none"
-              placeholder="Customer email"
-            />
-            <select
-              value={paymentMethod}
-              onChange={(e) => setPaymentMethod(e.target.value as "stripe" | "twocheckout" | "qr")}
-              className="border border-[#8d7750]/40 bg-black/20 px-3 py-2 outline-none"
-            >
-              {enabledPayments.map((method) => (
-                <option key={method.value} value={method.value}>
-                  {method.label}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={handleCheckout}
-              disabled={loading || !selected}
-              className="mt-2 bg-[#cfb784] px-4 py-2 text-sm font-semibold text-black disabled:opacity-60"
-            >
-              {loading ? "Processing..." : `Buy ${selected?.name ?? "artifact"}`}
-            </button>
-          </div>
-
-          {error ? <p className="mt-3 text-sm text-red-300">{error}</p> : null}
-
-          {checkoutInfo ? (
-            <div className="mt-4 border border-[#8d7750]/40 p-3 text-xs text-[#e8dbc1]">
-              <p>Order: {checkoutInfo.orderId}</p>
-              <p>Method: {checkoutInfo.provider.toUpperCase()}</p>
-              <p>Mode: {checkoutInfo.mode.toUpperCase()}</p>
-              {checkoutInfo.transferContent ? <p>Transfer: {checkoutInfo.transferContent}</p> : null}
-              {checkoutInfo.qrDataUrl ? (
-                <img src={checkoutInfo.qrDataUrl} alt="QR checkout" className="mt-3 h-44 w-44 border border-[#8d7750]/40 bg-white p-1" />
-              ) : null}
-            </div>
-          ) : null}
         </div>
       </section>
 
@@ -223,7 +100,8 @@ export function StorefrontPage({
                   alt={item.name}
                   className="h-full w-full object-cover"
                   onError={(event) => {
-                    event.currentTarget.src = "/artifacts/artifact-fallback.svg";
+                    event.currentTarget.src =
+                      "https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea?auto=format&fit=crop&w=1200&q=80";
                   }}
                 />
               </div>

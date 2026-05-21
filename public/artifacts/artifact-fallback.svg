@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="900" viewBox="0 0 800 900">
-  <rect width="800" height="900" fill="#0f0e0b"/>
-  <rect x="80" y="80" width="640" height="740" fill="#1a1711" stroke="#8d7750" stroke-width="8"/>
-  <text x="400" y="430" text-anchor="middle" fill="#cfb784" font-size="54" font-family="serif">Artifact</text>
-  <text x="400" y="490" text-anchor="middle" fill="#cfb784" font-size="28" font-family="serif">Image unavailable</text>
-</svg>
