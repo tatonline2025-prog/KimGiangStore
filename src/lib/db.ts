@@ -19,13 +19,19 @@ export async function connectDb(): Promise<boolean> {
     return true;
   }
 
-  if (!cached.promise) {
-    cached.promise = mongoose.connect(env.mongoUri, {
-      dbName: "kimgiang_store",
-      autoIndex: true,
-    });
-  }
+  try {
+    if (!cached.promise) {
+      cached.promise = mongoose.connect(env.mongoUri, {
+        dbName: "kimgiang_store",
+        autoIndex: true,
+      });
+    }
 
-  cached.conn = await cached.promise;
-  return true;
+    cached.conn = await cached.promise;
+    return true;
+  } catch {
+    cached.promise = null;
+    cached.conn = null;
+    return false;
+  }
 }

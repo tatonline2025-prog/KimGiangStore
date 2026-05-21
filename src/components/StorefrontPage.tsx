@@ -33,7 +33,7 @@ export function StorefrontPage({ products }: { products: CatalogItem[] }) {
   const [checkoutInfo, setCheckoutInfo] = useState<CheckoutResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const featured = useMemo(() => products.slice(0, 4), [products]);
+  const featured = useMemo(() => products, [products]);
 
   async function handleCheckout() {
     if (!selected) return;
@@ -77,8 +77,8 @@ export function StorefrontPage({ products }: { products: CatalogItem[] }) {
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,#3d3423_0%,#17130d_40%,#0d0b08_100%)] text-[#efe4cd]">
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-        <div className="text-xl tracking-[0.2em]">KIM GIANG ANTIQUES</div>
+      <header className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-3 px-4 py-5 sm:flex-row sm:items-center sm:px-6">
+        <div className="text-lg tracking-[0.2em] sm:text-xl">KIM GIANG ANTIQUES</div>
         <nav className="hidden gap-5 text-xs uppercase tracking-[0.2em] md:flex">
           {navItems.map((item) => (
             <a key={item} href="#" className="opacity-85 transition hover:opacity-100">
@@ -88,10 +88,10 @@ export function StorefrontPage({ products }: { products: CatalogItem[] }) {
         </nav>
       </header>
 
-      <section className="mx-auto grid max-w-6xl gap-8 px-6 pb-12 pt-6 md:grid-cols-[1.4fr_1fr]">
-        <div className="rounded-sm border border-[#8d7750]/40 bg-black/30 p-8 shadow-[0_20px_80px_-30px_rgba(0,0,0,0.8)]">
+      <section className="mx-auto grid max-w-6xl gap-8 px-4 pb-12 pt-6 sm:px-6 md:grid-cols-[1.4fr_1fr]">
+        <div className="rounded-sm border border-[#8d7750]/40 bg-black/30 p-6 shadow-[0_20px_80px_-30px_rgba(0,0,0,0.8)] sm:p-8">
           <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#cfb784]">Kim Giang Antiques</p>
-          <h1 className="max-w-xl text-4xl leading-tight md:text-5xl">
+          <h1 className="max-w-xl text-3xl leading-tight sm:text-4xl md:text-5xl">
             Preserving the legacy of ancient art where history finds its home.
           </h1>
           <p className="mt-4 max-w-xl text-sm text-[#d6c6a8]">Explore our curated collection of rare artifacts, each a testament to a bygone era.</p>
@@ -150,9 +150,9 @@ export function StorefrontPage({ products }: { products: CatalogItem[] }) {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-12">
-        <h2 className="mb-4 text-center text-4xl">THE TREASURY</h2>
-        <div className="grid gap-4 md:grid-cols-4">
+      <section className="mx-auto max-w-6xl px-4 pb-12 sm:px-6">
+        <h2 className="mb-4 text-center text-3xl sm:text-4xl">THE TREASURY</h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {featured.map((item) => (
             <article
               key={item.slug}
@@ -177,7 +177,7 @@ export function StorefrontPage({ products }: { products: CatalogItem[] }) {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-14 md:grid-cols-[1.2fr_1fr]">
+      <section className="mx-auto grid max-w-6xl gap-6 px-4 pb-14 sm:px-6 md:grid-cols-[1.2fr_1fr]">
         <div className="border border-[#8d7750]/40 bg-[#120f0b]/90 p-6">
           <h3 className="text-3xl">Provenance & Certificate of Authenticity</h3>
           <p className="mt-3 text-sm text-[#d6c6a8]">
