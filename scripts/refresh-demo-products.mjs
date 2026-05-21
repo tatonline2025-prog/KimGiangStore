@@ -15,6 +15,7 @@ const imageMap = {
   "celadon-tea-vessel-demo": "/artifacts/celadon-vessel.svg",
   "ivory-seal-handle": "/artifacts/phoenix-panel.svg",
   "temple-bronze-bell": "/artifacts/bronze-gong.svg",
+  "temple-bronze-bell-demo": "/artifacts/bronze-gong.svg",
   "lacquered-manuscript-chest": "/artifacts/manuscript-chest.svg",
   "scholar-stone-plinth": "/artifacts/jade-disc.svg",
   "blue-white-porcelain-jar": "/artifacts/porcelain-jar.svg",
