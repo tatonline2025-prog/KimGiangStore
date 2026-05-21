@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KimGiang Store
 
-## Getting Started
+Luxury ecommerce storefront inspired by Kim Giang Antiques visuals, including:
 
-First, run the development server:
+- Storefront homepage with hero, treasury grid, provenance section, and checkout widget
+- Admin panel for product and order management
+- Payment integration layer for Stripe, 2Checkout, and QR transfer flows
+- Webhook endpoints with signature verification and payment status updates
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Next.js 16 (App Router, TypeScript)
+- MongoDB + Mongoose
+- Tailwind CSS
+- Stripe SDK
+- Custom 2Checkout signer/verifier
+- QRCode generation for bank transfer flow
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Local Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Copy .env.example to .env.local
+2. Fill MongoDB and payment keys
+3. Install deps
+4. Run dev server
 
-## Learn More
+Commands:
 
-To learn more about Next.js, take a look at the following resources:
+1. npm install
+2. npm run dev
+3. npm run lint
+4. npm run build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment Variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See .env.example for all keys:
 
-## Deploy on Vercel
+- MONGODB_URI
+- NEXT_PUBLIC_BASE_URL
+- STRIPE_SECRET_KEY
+- STRIPE_WEBHOOK_SECRET
+- TWOCHECKOUT_SELLER_ID
+- TWOCHECKOUT_SECRET_KEY
+- TWOCHECKOUT_WEBHOOK_SECRET
+- QR_PROVIDER_SECRET
+- QR_BANK_BIN
+- QR_BANK_ACCOUNT
+- QR_ACCOUNT_NAME
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Routes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Storefront: /
+- Admin: /admin
+- Checkout fallback pages:
+	- /checkout/success
+	- /checkout/cancel
+	- /checkout/simulated
+
+API:
+
+- /api/products
+- /api/products/[id]
+- /api/checkout
+- /api/admin/orders
+- /api/webhooks/stripe
+- /api/webhooks/twocheckout
+- /api/webhooks/qr
+
+## Production Notes
+
+- Do not trust frontend payment success state.
+- Always update order/payment records from verified webhooks.
+- Protect admin route with auth + RBAC + MFA before go-live.
+- Add idempotency storage per webhook event id in production.
