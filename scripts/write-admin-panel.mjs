@@ -1,3 +1,6 @@
+import { writeFileSync } from "fs";
+
+const src = `\
 "use client";
 
 import Image from "next/image";
@@ -79,7 +82,7 @@ const blankProduct: Product = {
 
 function NavItem({ active, icon, label, onClick }: { active: boolean; icon: string; label: string; onClick: () => void }) {
   return (
-    <button onClick={onClick} className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition-all ${active ? "bg-amber-50 text-amber-700 shadow-sm ring-1 ring-amber-200" : "text-gray-500 hover:bg-gray-100 hover:text-gray-800"}`}>
+    <button onClick={onClick} className={\`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition-all \${active ? "bg-amber-50 text-amber-700 shadow-sm ring-1 ring-amber-200" : "text-gray-500 hover:bg-gray-100 hover:text-gray-800"}\`}>
       <span className="text-base">{icon}</span>{label}
     </button>
   );
@@ -93,8 +96,8 @@ function Badge({ text }: { text: string }) {
     unpaid: "bg-gray-100 text-gray-600", stripe: "bg-indigo-100 text-indigo-700",
     qr: "bg-teal-100 text-teal-700", twocheckout: "bg-orange-100 text-orange-700",
   };
-  const cls = colors[text?.toLowerCase().replace(/\s+/g, "")] ?? "bg-gray-100 text-gray-600";
-  return <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${cls}`}>{text}</span>;
+  const cls = colors[text?.toLowerCase().replace(/\\s+/g, "")] ?? "bg-gray-100 text-gray-600";
+  return <span className={\`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium \${cls}\`}>{text}</span>;
 }
 
 function StatCard({ label, value, icon, color }: { label: string; value: string | number; icon: string; color: string }) {
@@ -105,7 +108,7 @@ function StatCard({ label, value, icon, color }: { label: string; value: string 
           <p className="text-xs font-medium uppercase tracking-wide text-gray-400">{label}</p>
           <p className="mt-1 text-2xl font-semibold text-gray-800">{value}</p>
         </div>
-        <div className={`flex h-11 w-11 items-center justify-center rounded-xl text-xl ${color}`}>{icon}</div>
+        <div className={\`flex h-11 w-11 items-center justify-center rounded-xl text-xl \${color}\`}>{icon}</div>
       </div>
     </div>
   );
@@ -171,7 +174,7 @@ export function AdminPanel({
   async function saveProduct(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const isNew = isCreatingProduct || !selectedProductId;
-    const res = await fetch(isNew ? "/api/products" : `/api/products/${selectedProductId}`, {
+    const res = await fetch(isNew ? "/api/products" : \`/api/products/\${selectedProductId}\`, {
       method: isNew ? "POST" : "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(productDraft),
     });
     const data = await res.json();
@@ -182,7 +185,7 @@ export function AdminPanel({
 
   async function deleteProduct(id: string) {
     if (!confirm("Delete this product?")) return;
-    const res = await fetch(`/api/products/${id}`, { method: "DELETE" });
+    const res = await fetch(\`/api/products/\${id}\`, { method: "DELETE" });
     if (!res.ok) { setStatus({ text: "Unable to delete", type: "err" }); return; }
     setStatus({ text: "Product deleted", type: "ok" }); setIsCreatingProduct(false); await loadData();
   }
@@ -223,7 +226,7 @@ export function AdminPanel({
     <div className="flex min-h-screen bg-gray-50 font-sans">
       {sidebarOpen && <div className="fixed inset-0 z-20 bg-black/30 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
-      <aside className={`fixed inset-y-0 left-0 z-30 flex w-64 flex-col border-r border-gray-100 bg-white shadow-lg transition-transform duration-300 lg:static lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      <aside className={\`fixed inset-y-0 left-0 z-30 flex w-64 flex-col border-r border-gray-100 bg-white shadow-lg transition-transform duration-300 lg:static lg:translate-x-0 \${sidebarOpen ? "translate-x-0" : "-translate-x-full"}\`}>
         <div className="flex h-16 items-center border-b border-gray-100 px-5">
           <div className="flex items-center gap-2.5">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500 text-sm text-white">🏺</span>
@@ -258,7 +261,7 @@ export function AdminPanel({
 
         <main className="flex-1 overflow-y-auto p-5 lg:p-7">
           {status && (
-            <div className={`mb-5 flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-medium ${status.type === "ok" ? "bg-green-50 text-green-700 ring-1 ring-green-200" : "bg-red-50 text-red-700 ring-1 ring-red-200"}`}>
+            <div className={\`mb-5 flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-medium \${status.type === "ok" ? "bg-green-50 text-green-700 ring-1 ring-green-200" : "bg-red-50 text-red-700 ring-1 ring-red-200"}\`}>
               {status.type === "ok" ? "✓" : "✕"} {status.text}
               <button onClick={() => setStatus(null)} className="ml-auto opacity-50 hover:opacity-100">✕</button>
             </div>
@@ -283,7 +286,7 @@ export function AdminPanel({
                     <div className="p-3">
                       <p className="truncate text-sm font-semibold text-gray-800">{p.name}</p>
                       <p className="text-xs text-gray-400">{p.dynasty}</p>
-                      <p className="mt-1 font-semibold text-amber-600">${p.priceUsd.toLocaleString("en-US")}</p>
+                      <p className="mt-1 font-semibold text-amber-600">\${p.priceUsd.toLocaleString("en-US")}</p>
                     </div>
                   </div>
                 ))}
@@ -300,7 +303,7 @@ export function AdminPanel({
                         {orders.slice(0, 5).map((o) => (
                           <tr key={o._id} className="cursor-pointer hover:bg-amber-50/50" onClick={() => { setSelectedOrderId(o._id); setActiveMenu("orders"); }}>
                             <td className="px-4 py-3 font-medium text-gray-800">{o.customerName}</td>
-                            <td className="px-4 py-3 text-gray-600">${o.totalUsd.toLocaleString("en-US")}</td>
+                            <td className="px-4 py-3 text-gray-600">\${o.totalUsd.toLocaleString("en-US")}</td>
                             <td className="px-4 py-3"><Badge text={o.paymentMethod} /></td>
                             <td className="px-4 py-3"><Badge text={o.orderStatus} /></td>
                           </tr>
@@ -322,14 +325,14 @@ export function AdminPanel({
                 </div>
                 <div className="space-y-2">
                   {products.map((p) => (
-                    <button key={p._id} onClick={() => selectProduct(p)} className={`flex w-full items-center gap-3 rounded-xl p-2 text-left transition ${selectedProductId === p._id && !isCreatingProduct ? "bg-amber-50 ring-1 ring-amber-200" : "hover:bg-gray-50"}`}>
+                    <button key={p._id} onClick={() => selectProduct(p)} className={\`flex w-full items-center gap-3 rounded-xl p-2 text-left transition \${selectedProductId === p._id && !isCreatingProduct ? "bg-amber-50 ring-1 ring-amber-200" : "hover:bg-gray-50"}\`}>
                       <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-gray-100">
                         {p.imageUrl && <Image src={p.imageUrl} alt={p.name} fill unoptimized className="object-cover" />}
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-sm font-medium text-gray-800">{p.name}</p>
                         <p className="text-xs text-gray-400">{p.dynasty}</p>
-                        <p className="text-xs font-semibold text-amber-600">${p.priceUsd.toLocaleString("en-US")}</p>
+                        <p className="text-xs font-semibold text-amber-600">\${p.priceUsd.toLocaleString("en-US")}</p>
                       </div>
                     </button>
                   ))}
@@ -390,9 +393,9 @@ export function AdminPanel({
                     </thead>
                     <tbody className="divide-y divide-gray-50">
                       {orders.map((o) => (
-                        <tr key={o._id} className={`cursor-pointer transition ${selectedOrderId === o._id ? "bg-amber-50" : "hover:bg-gray-50"}`} onClick={() => setSelectedOrderId(o._id)}>
+                        <tr key={o._id} className={\`cursor-pointer transition \${selectedOrderId === o._id ? "bg-amber-50" : "hover:bg-gray-50"}\`} onClick={() => setSelectedOrderId(o._id)}>
                           <td className="px-4 py-3"><p className="font-medium text-gray-800">{o.customerName}</p><p className="text-xs text-gray-400">{o.customerEmail}</p></td>
-                          <td className="px-4 py-3 font-semibold text-gray-700">${o.totalUsd.toLocaleString("en-US")}</td>
+                          <td className="px-4 py-3 font-semibold text-gray-700">\${o.totalUsd.toLocaleString("en-US")}</td>
                           <td className="px-4 py-3"><Badge text={o.paymentMethod} /></td>
                           <td className="px-4 py-3"><Badge text={o.orderStatus} /></td>
                           <td className="px-4 py-3 text-xs text-gray-400">{new Date(o.createdAt).toLocaleDateString("en-GB")}</td>
@@ -412,7 +415,7 @@ export function AdminPanel({
                       <p className="text-gray-500">{selectedOrder.customerEmail}</p>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
-                      <div className="rounded-xl bg-gray-50 p-3"><p className="text-xs font-semibold uppercase text-gray-400">Amount</p><p className="mt-1 text-lg font-bold text-amber-600">${selectedOrder.totalUsd.toLocaleString("en-US")}</p></div>
+                      <div className="rounded-xl bg-gray-50 p-3"><p className="text-xs font-semibold uppercase text-gray-400">Amount</p><p className="mt-1 text-lg font-bold text-amber-600">\${selectedOrder.totalUsd.toLocaleString("en-US")}</p></div>
                       <div className="rounded-xl bg-gray-50 p-3"><p className="text-xs font-semibold uppercase text-gray-400">Payment</p><div className="mt-1"><Badge text={selectedOrder.paymentMethod} /></div></div>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
@@ -432,7 +435,7 @@ export function AdminPanel({
                 <h2 className="mb-3 font-semibold text-gray-800">Site Pages</h2>
                 <div className="space-y-1.5">
                   {pages.map((pg) => (
-                    <button key={pg.key} onClick={() => selectPage(pg)} className={`w-full rounded-xl px-3 py-2.5 text-left text-sm font-medium transition ${selectedPageKey === pg.key ? "bg-amber-50 text-amber-700 ring-1 ring-amber-200" : "text-gray-600 hover:bg-gray-50"}`}>
+                    <button key={pg.key} onClick={() => selectPage(pg)} className={\`w-full rounded-xl px-3 py-2.5 text-left text-sm font-medium transition \${selectedPageKey === pg.key ? "bg-amber-50 text-amber-700 ring-1 ring-amber-200" : "text-gray-600 hover:bg-gray-50"}\`}>
                       {pageKeyLabels[pg.key] ?? pg.key}
                     </button>
                   ))}
@@ -514,7 +517,7 @@ export function AdminPanel({
                         <input type="checkbox" className="peer sr-only" checked={settings[gw.key]} onChange={(e) => setSettings((p) => ({ ...p, [gw.key]: e.target.checked }))} />
                         <div className={TOGGLE_TRACK} />
                       </label>
-                      <span className={`text-sm font-semibold ${gw.color}`}>{gw.label}</span>
+                      <span className={\`text-sm font-semibold \${gw.color}\`}>{gw.label}</span>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       {gw.fields.map((fd) => (
@@ -534,3 +537,7 @@ export function AdminPanel({
     </div>
   );
 }
+`;
+
+writeFileSync("src/components/AdminPanel.tsx", src, "utf8");
+console.log("AdminPanel.tsx written, lines:", src.split("\n").length);

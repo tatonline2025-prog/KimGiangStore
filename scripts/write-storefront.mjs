@@ -1,3 +1,6 @@
+import { writeFileSync } from "fs";
+
+const src = `\
 "use client";
 
 import Image from "next/image";
@@ -121,7 +124,7 @@ export function StorefrontPage({ products, settings }: { products: CatalogItem[]
           {/* hero images */}
           <div className="mt-8 grid grid-cols-3 gap-3 md:absolute md:bottom-6 md:right-6 md:mt-0 md:w-[44%]">
             {HERO_IMGS.map((src, i) => (
-              <button key={src} onClick={() => setHeroIdx(i)} className={`group relative overflow-hidden rounded-lg border transition ${heroIdx === i ? "border-[#cfb784]" : "border-[#8d7750]/30 hover:border-[#8d7750]/70"}`}>
+              <button key={src} onClick={() => setHeroIdx(i)} className={\`group relative overflow-hidden rounded-lg border transition \${heroIdx === i ? "border-[#cfb784]" : "border-[#8d7750]/30 hover:border-[#8d7750]/70"}\`}>
                 <div className="relative h-24 sm:h-32 md:h-[120px]">
                   <Image src={src} alt="Artifact" fill unoptimized className="object-cover transition duration-500 group-hover:scale-105" />
                 </div>
@@ -165,7 +168,7 @@ export function StorefrontPage({ products, settings }: { products: CatalogItem[]
           {featured.map((item) => (
             <article
               key={item.slug}
-              className={`group cursor-pointer overflow-hidden rounded-xl border bg-[#16120d] transition hover:shadow-2xl ${selected?.slug === item.slug ? "border-[#cfb784]" : "border-[#2e2615] hover:border-[#8d7750]/60"}`}
+              className={\`group cursor-pointer overflow-hidden rounded-xl border bg-[#16120d] transition hover:shadow-2xl \${selected?.slug === item.slug ? "border-[#cfb784]" : "border-[#2e2615] hover:border-[#8d7750]/60"}\`}
               onClick={() => setSelected(item)}
             >
               <div className="relative h-52 overflow-hidden bg-[#0a0804]">
@@ -184,7 +187,7 @@ export function StorefrontPage({ products, settings }: { products: CatalogItem[]
                 <p className="mt-1 font-semibold leading-snug">{item.name}</p>
                 <p className="mt-1 text-xs text-[#8d7750]/80 line-clamp-2">{item.shortDescription}</p>
                 <div className="mt-3 flex items-center justify-between">
-                  <p className="text-lg font-semibold text-[#cfb784]">${item.priceUsd.toLocaleString("en-US")}</p>
+                  <p className="text-lg font-semibold text-[#cfb784]">\${item.priceUsd.toLocaleString("en-US")}</p>
                   <span className="rounded-full border border-[#8d7750]/40 px-3 py-1 text-xs text-[#8d7750] transition group-hover:border-[#cfb784]/60 group-hover:text-[#cfb784]">View</span>
                 </div>
               </div>
@@ -214,7 +217,7 @@ export function StorefrontPage({ products, settings }: { products: CatalogItem[]
                   <p className="text-xs text-[#8d7750]">Provenance Code</p>
                   <p className="font-mono text-sm font-semibold text-[#cfb784]">{selected.provenanceCode}</p>
                 </div>
-                <p className="text-2xl font-semibold text-[#cfb784]">${selected.priceUsd.toLocaleString("en-US")}</p>
+                <p className="text-2xl font-semibold text-[#cfb784]">\${selected.priceUsd.toLocaleString("en-US")}</p>
               </div>
             </div>
           </div>
@@ -351,3 +354,7 @@ export function StorefrontPage({ products, settings }: { products: CatalogItem[]
     </div>
   );
 }
+`;
+
+writeFileSync("src/components/StorefrontPage.tsx", src, "utf8");
+console.log("StorefrontPage.tsx written, lines:", src.split("\n").length);
